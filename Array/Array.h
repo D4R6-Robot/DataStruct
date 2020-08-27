@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-typedef signed long int Long;
+typedef unsigned long int Long;
 
 typedef struct _array {
 	void(*front);
@@ -12,6 +12,7 @@ typedef struct _array {
 }Array;
 
 void Create(Array* array, Long capacity, size_t size);
+void Destory(Array* array);
 void Store(Array* array, Long index, void* object, size_t size);
-
+void Insert(Array* array, Long index, void* object, size_t size);
 #endif _ARRAY_H_

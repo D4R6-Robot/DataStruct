@@ -11,10 +11,57 @@ void Create(Array* array, Long capacity, size_t size)
 	array->length = 0;
 }
 
+void Destory(Array* array)
+{
+	if (array->front != NULL) {
+		free(array->front);
+		array->front = NULL;
+	}
+}
+
 void Store(Array* array, Long index, void* object, size_t size)
 {
 	// sizeof(void) : unknown size.
 	memcpy((char*)(array->front) + (index * size), object, size);
 	array->length++;
 	return index;
+}
+
+void Insert(Array* array, Long index, void* object, size_t size)
+{
+	void(*temp);
+	Long i = 0;
+	Long j = 0;
+	Long capacity = array->capacity + 1;
+
+	temp = calloc(capacity, size);
+
+	while (i < index) {
+		memcpy((char*)temp + (i * size),
+			((char*)array->front) + (i * size),
+			size);
+		i++;
+		j++;
+	}
+
+	i++;
+
+	while (j < array->length) {
+		memcpy((char*)temp + (i * size),
+			((char*)array->front) + (i * size),
+			size);
+		i++;
+		j++;
+	}
+
+	if (array->front != NULL) {
+		array->front = temp;
+		array->capacity++;
+		memcpy(((char*)array->front) + (index * size),
+			object,
+			size);
+
+		array->length++;
+		return index;
+	}
 }
