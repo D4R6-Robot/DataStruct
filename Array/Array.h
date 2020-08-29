@@ -13,6 +13,7 @@ typedef struct _array {
 
 void Create(Array* array, Long capacity, size_t size);
 void Destory(Array* array);
-void Store(Array* array, Long index, void* object, size_t size);
-void Insert(Array* array, Long index, void* object, size_t size);
+Long Store(Array* array, Long index, void* object, size_t size);
+Long GetAt(Array* array, Long index, size_t size);
+Long Insert(Array* array, Long index, void* object, size_t size);
 #endif _ARRAY_H_

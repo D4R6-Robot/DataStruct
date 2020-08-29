@@ -19,7 +19,7 @@ void Destory(Array* array)
 	}
 }
 
-void Store(Array* array, Long index, void* object, size_t size)
+Long Store(Array* array, Long index, void* object, size_t size)
 {
 	// sizeof(void) : unknown size.
 	memcpy((char*)(array->front) + (index * size), object, size);
@@ -27,7 +27,12 @@ void Store(Array* array, Long index, void* object, size_t size)
 	return index;
 }
 
-void Insert(Array* array, Long index, void* object, size_t size)
+Long GetAt(Array* array, Long index, size_t size)
+{
+	return *((char*)(array->front) + (index * sizeof(Long)));
+}
+
+Long Insert(Array* array, Long index, void* object, size_t size)
 {
 	void(*temp);
 	Long i = 0;
