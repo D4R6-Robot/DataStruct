@@ -3,17 +3,20 @@
 
 #include <stddef.h>
 
-typedef unsigned long int Long;
+// vcruntime.h
+typedef signed __int64 Int64;
 
 typedef struct _array {
 	void(*front);
-	Long capacity;
-	Long length;
+	Int64 capacity;
+	Int64 length;
 }Array;
 
-void Create(Array* array, Long capacity, size_t size);
+void Create(Array* array, Int64 capacity, size_t size);
 void Destory(Array* array);
-Long Store(Array* array, Long index, void* object, size_t size);
-Long GetAt(Array* array, Long index, size_t size);
-Long Insert(Array* array, Long index, void* object, size_t size);
+Int64 Store(Array* array, Int64 index, void* object, size_t size);
+Int64 GetAt(Array* array, Int64 index, size_t size);
+Int64 Insert(Array* array, Int64 index, void* object, size_t size);
+Int64 AppendFromFront(Array* array, void* object, size_t size);
+Int64 AppendFromRear(Array* array, void* object, size_t size);
 #endif _ARRAY_H_
