@@ -135,3 +135,38 @@ Int64 AppendFromRear(Array* array, void* object, size_t size)
 
 	return index;
 }
+
+Int64 Delete(Array* array, Int64 index, size_t size)
+{
+	void(*temp);
+	Int64 i = 0;
+	Int64 j = 0;
+
+	if (array->capacity > 1) {
+		temp = calloc(array->capacity - 1, size);
+	}
+
+	while (i < array->length) {
+		if (i != index) {
+			memcpy(((char*)temp) + (j * size),
+				((char*)array->front) + (i * size),
+				size);
+			j++;
+		}
+		i++;
+	}
+
+	if (array->front != NULL) {
+		free(array->front);
+		array->front = NULL;
+	}
+	
+	if (array->capacity > 1) {
+		array->front = temp;
+	}
+	array->length = array->length - 1;
+	array->capacity = array->capacity - 1;
+	index = 0;
+	
+	return index;
+}

@@ -34,6 +34,9 @@ int main(int argc, char* argv[])
 	printf("array [%lld] value [%lld]\n", index, GetAt(&array, 5, sizeof(Int64)));
 
 
+	index = Delete(&array, 0, sizeof(Int64));
+	printf("array capacity [%lld]\n", array.capacity);
+	printf("array [%lld] value [%lld]\n", index, GetAt(&array, 0, sizeof(Int64)));
 
 	return 0;
 }
