@@ -32,16 +32,26 @@ Int64 GetAt(Array* array, Int64 index, size_t size)
 	return *((char*)(array->front) + (index * size));
 }
 
+void PrintAll(Array* array, size_t size)
+{
+	Int64 i = 0;
+
+	while (i < array->length) {
+		printf("[%lld] %ld\n", i, *((char*)(array->front) + (i * size)));
+		i++;
+	}
+}
+
 Int64 Insert(Array* array, Int64 index, void* object, size_t size)
 {
-	void(*temp);
+	void(*temps);
 	Int64 i = 0;
 	Int64 j = 0;
 
-	temp = calloc(array->capacity + 1, size);
+	temps = calloc(array->capacity + 1, size);
 
 	while (i < index) {
-		memcpy(((char*)temp) + (i * size),
+		memcpy(((char*)temps) + (i * size),
 			((char*)array->front) + (j * size),
 			size);
 		i++;
@@ -51,7 +61,7 @@ Int64 Insert(Array* array, Int64 index, void* object, size_t size)
 	i++;
 
 	while (j < array->length) {
-		memcpy(((char*)temp) + (i * size),
+		memcpy(((char*)temps) + (i * size),
 			((char*)array->front) + (j * size),
 			size);
 		i++;
@@ -63,7 +73,7 @@ Int64 Insert(Array* array, Int64 index, void* object, size_t size)
 		array->front = NULL;
 	}
 
-	array->front = temp;
+	array->front = temps;
 	array->capacity++;
 	memcpy(((char*)array->front) + (index * size),
 		object,
@@ -75,15 +85,15 @@ Int64 Insert(Array* array, Int64 index, void* object, size_t size)
 
 Int64 AppendFromFront(Array* array, void* object, size_t size)
 {
-	void(*temp);
+	void(*temps);
 	Int64 index = 0;
 	Int64 i = 0;
 
-	temp = calloc(array->capacity + 1, size);
+	temps = calloc(array->capacity + 1, size);
 
 	while (i < array->length)
 	{
-		memcpy(((char*)temp) + ((i + 1) * size),
+		memcpy(((char*)temps) + ((i + 1) * size),
 			((char*)array->front) + (i * size),
 			size);
 
@@ -95,7 +105,7 @@ Int64 AppendFromFront(Array* array, void* object, size_t size)
 		array->front = NULL;
 	}
 
-	array->front = temp;
+	array->front = temps;
 	array->capacity = array->capacity + 1;
 	memcpy(((char*)array->front) + (index * size),
 		object,
@@ -107,14 +117,14 @@ Int64 AppendFromFront(Array* array, void* object, size_t size)
 
 Int64 AppendFromRear(Array* array, void* object, size_t size)
 {
-	void(*temp);
+	void(*temps);
 	Int64 index = 0;
 
-	temp = calloc(array->capacity + 1, size);
+	temps = calloc(array->capacity + 1, size);
 
 	while (index < array->length)
 	{
-		memcpy(((char*)temp) + (index * size),
+		memcpy(((char*)temps) + (index * size),
 			((char*)array->front) + (index * size),
 			size);
 
@@ -126,7 +136,7 @@ Int64 AppendFromRear(Array* array, void* object, size_t size)
 		array->front = NULL;
 	}
 
-	array->front = temp;
+	array->front = temps;
 	array->capacity = array->capacity + 1;
 	memcpy(((char*)array->front) + (index * size),
 		object,
@@ -138,17 +148,17 @@ Int64 AppendFromRear(Array* array, void* object, size_t size)
 
 Int64 Delete(Array* array, Int64 index, size_t size)
 {
-	void(*temp);
+	void(*temps) = NULL;
 	Int64 i = 0;
 	Int64 j = 0;
 
 	if (array->capacity > 1) {
-		temp = calloc(array->capacity - 1, size);
+		temps = calloc(array->capacity - 1, size);
 	}
 
 	while (i < array->length) {
 		if (i != index) {
-			memcpy(((char*)temp) + (j * size),
+			memcpy(((char*)temps) + (j * size),
 				((char*)array->front) + (i * size),
 				size);
 			j++;
@@ -162,11 +172,75 @@ Int64 Delete(Array* array, Int64 index, size_t size)
 	}
 	
 	if (array->capacity > 1) {
-		array->front = temp;
+		array->front = temps;
 	}
-	array->length = array->length - 1;
-	array->capacity = array->capacity - 1;
-	index = 0;
+	array->length --;
+	array->capacity --;
+	index = -1;
 	
+	return index;
+}
+
+Int64 DeleteFromFront(Array* array, size_t size)
+{
+	void(*temps) = NULL;
+	Int64 index = 1;
+
+	if (array->capacity > 1) {
+		temps = calloc(array->capacity - 1, size);
+	}
+
+	while (index < array->length) {
+		memcpy(((char*)temps) + ((index - 1) * size),
+			((char*)array->front) + (index * size),
+			size);
+		index++;
+	}
+
+	if (array->front != NULL) {
+		free(array->front);
+		array->front = NULL;
+	}
+
+	if (array->capacity > 1) {
+		array->front = temps;
+	}
+
+	array->length--;
+	array->capacity--;
+	index = -1;
+
+	return index;
+}
+
+Int64 DeleteFromRear(Array* array, size_t size)
+{
+	void(*temps) = NULL;
+	Int64 index = 0;
+
+	if (array->capacity > 1) {
+		temps = calloc(array->capacity - 1, size);
+	}
+
+	while (index < array->length - 1) {
+		memcpy(((char*)temps) + (index * size),
+			((char*)array->front) + (index * size),
+			size);
+		index++;
+	}
+
+	if (array->front != NULL) {
+		free(array->front);
+		array->front = NULL;
+	}
+
+	if (array->capacity > 1) {
+		array->front = temps;
+	}
+
+	array->length--;
+	array->capacity--;
+	index = -1;
+
 	return index;
 }

@@ -16,8 +16,12 @@ void Create(Array* array, Int64 capacity, size_t size);
 void Destory(Array* array);
 Int64 Store(Array* array, Int64 index, void* object, size_t size);
 Int64 GetAt(Array* array, Int64 index, size_t size);
+void PrintAll(Array* array, size_t size);
 Int64 Insert(Array* array, Int64 index, void* object, size_t size);
 Int64 AppendFromFront(Array* array, void* object, size_t size);
 Int64 AppendFromRear(Array* array, void* object, size_t size);
 Int64 Delete(Array* array, Int64 index, size_t size);
+Int64 DeleteFromFront(Array* array, size_t size);
+Int64 DeleteFromRear(Array* array, size_t size);
+
 #endif _ARRAY_H_
