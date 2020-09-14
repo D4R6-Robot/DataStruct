@@ -184,33 +184,33 @@ Int64 Delete(Array* array, Int64 index, size_t size)
 Int64 DeleteFromFront(Array* array, size_t size)
 {
 	void(*temps) = NULL;
-	Int64 index = 1;
+Int64 index = 1;
 
-	if (array->capacity > 1) {
-		temps = calloc(array->capacity - 1, size);
-	}
+if (array->capacity > 1) {
+	temps = calloc(array->capacity - 1, size);
+}
 
-	while (index < array->length) {
-		memcpy(((char*)temps) + ((index - 1) * size),
-			((char*)array->front) + (index * size),
-			size);
-		index++;
-	}
+while (index < array->length) {
+	memcpy(((char*)temps) + ((index - 1) * size),
+		((char*)array->front) + (index * size),
+		size);
+	index++;
+}
 
-	if (array->front != NULL) {
-		free(array->front);
-		array->front = NULL;
-	}
+if (array->front != NULL) {
+	free(array->front);
+	array->front = NULL;
+}
 
-	if (array->capacity > 1) {
-		array->front = temps;
-	}
+if (array->capacity > 1) {
+	array->front = temps;
+}
 
-	array->length--;
-	array->capacity--;
-	index = -1;
+array->length--;
+array->capacity--;
+index = -1;
 
-	return index;
+return index;
 }
 
 Int64 DeleteFromRear(Array* array, size_t size)
@@ -243,4 +243,56 @@ Int64 DeleteFromRear(Array* array, size_t size)
 	index = -1;
 
 	return index;
+}
+
+Int64 Modify(Array* array, Int64 index, void* object, size_t size)
+{
+	memcpy((char*)(array->front) + (index * size), object, size);
+
+	return index;
+}
+
+void Clear(Array* array)
+{
+	if (array->front != NULL) {
+		free(array->front);
+	}
+
+	array->front = NULL;
+	array->capacity = 0;
+	array->length = 0;
+}
+
+Int64 LinearSearchUnique(Array* array, void* key, size_t size, int (*compare)(void*, void*))
+{
+	Int64 index = -1;
+	Int64 i = 0;
+
+	while ((i < array->length)
+		&& compare((char*)(array->front) + (i * size), key) != 0) {
+		i++;
+	}
+
+	if (i < array->length) {
+		index = i;
+	}
+
+	return index;
+}
+
+int CompareIntegers(void* one, void* other)
+{
+	int ret;
+
+	if (*((int*)one) > *((int*)other)) {
+		ret = 1;
+	}
+	else if (*((int*)one) == *((int*)other)) {
+		ret = 0;
+	}
+	else {
+		ret = -1;
+	}
+
+	return ret;
 }

@@ -23,5 +23,9 @@ Int64 AppendFromRear(Array* array, void* object, size_t size);
 Int64 Delete(Array* array, Int64 index, size_t size);
 Int64 DeleteFromFront(Array* array, size_t size);
 Int64 DeleteFromRear(Array* array, size_t size);
+Int64 Modify(Array* array, Int64 index, void* object, size_t size);
+void Clear(Array* array);
+Int64 LinearSearchUnique(Array* array, void* key, size_t size, int (*compare)(void*, void*));
+int CompareIntegers(void* one, void* other);
 
 #endif _ARRAY_H_

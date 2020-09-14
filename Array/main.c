@@ -45,13 +45,30 @@ int main(int argc, char* argv[])
 
 	index = DeleteFromFront(&array, sizeof(Int64));
 	printf("array capacity [%lld]\n", array.capacity);
-	printf("array [%lld]\n", index);
+	printf("array DeleteFromFront [%lld]\n", index);
 	PrintAll(&array, sizeof(Int64));
 
 	index = DeleteFromRear(&array, sizeof(Int64));
 	printf("array capacity [%lld]\n", array.capacity);
-	printf("array [%lld]\n", index);
+	printf("array DeleteFromRear [%lld]\n", index);
 	PrintAll(&array, sizeof(Int64));
+
+	Int64 key = 2;
+	index = LinearSearchUnique(&array, &key, sizeof(Int64), CompareIntegers);
+	printf("array capacity [%lld]\n", array.capacity);
+	printf("array LinearSearchUnique [%lld]\n", index);
+	PrintAll(&array, sizeof(Int64));
+
+	object = 7;
+	index = Modify(&array, 0, &object, sizeof(Int64));
+	printf("array capacity [%lld]\n", array.capacity);
+	printf("array LinearSearchUnique [%lld]\n", index);
+	PrintAll(&array, sizeof(Int64));
+
+	Clear(&array);
+	printf("array Clear capacity [%lld]\n", array.capacity);
+	PrintAll(&array, sizeof(Int64));
+
 
 	return 0;
 }
